@@ -11,7 +11,7 @@ class Departments(models.Model):
 
 	department_id = models.AutoField(primary_key=True)
 	name = models.CharField(max_length=250)
-	
+
 	def __str__(self):
 		return self.name
 
@@ -27,9 +27,12 @@ class Employee(models.Model):
 	name = models.CharField(max_length=250)
 	email_id = models.EmailField(max_length=250)
 	password = models.CharField(max_length=250)
-	department_id = models.ForeignKey(Departments, null=True, on_delete=models.SET_NULL)
+	department_id = models.ForeignKey(Departments, on_delete=models.CASCADE)
 	is_admin = models.BooleanField(default=False)
 	is_active = models.BooleanField(default=True)
+
+	def __str__(self):
+		return self.name
 
 class EmployeeAdmin(admin.ModelAdmin):
 	list_display = ('emp_id', 'name', 'email_id', 'password', 'department_id', 'is_admin', 'is_active')
@@ -61,10 +64,13 @@ class Tickets(models.Model):
 		)
 	priority = models.CharField(max_length=20, choices=PRIORITY_CHOICES)
 
-	department_id = models.ForeignKey(Departments, null=True, on_delete=models.SET_NULL)
+	department_id = models.ForeignKey(Departments, on_delete=models.CASCADE)
 	created_date = models.DateTimeField(auto_now_add=True)
 	ticket_owner = models.CharField(max_length=250)
 	assigned_to = models.ForeignKey(Employee, on_delete=models.CASCADE)
+
+	def __str__(self):
+		return str(self.ticket_id)
 
 class TicketsAdmin(admin.ModelAdmin):
 	list_display = ('ticket_id', 'subject', 'description', 'status', 'priority', 'department_id', 'created_date', 'ticket_owner', 'assigned_to')
