@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login
 from ticket.models import Tickets
+from ticket.forms import FormTicket
 # Create your views here.
 
 def all_tickets( request ):
@@ -30,4 +31,9 @@ def list_view(request):
 
 def info_view(request):
 	data = Tickets.objects.get(ticket_id=1)
+	data_
 	return render(request, 'ticket/info.html', {'data':data})
+
+def add_ticket_view(request):
+	form = FormTicket()
+	return render(request, 'ticket/ticket_form.html', {'form': form})
