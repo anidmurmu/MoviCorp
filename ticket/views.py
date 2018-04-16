@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login
-from ticket.models import Tickets
+from ticket.models import Tickets, Employee, Departments, Comments
 from ticket.forms import FormTicket
 # Create your views here.
 
@@ -34,6 +34,20 @@ def info_view(request):
 	data_
 	return render(request, 'ticket/info.html', {'data':data})
 
+# def add_ticket_view(request):
+# 	print ('apple')
+# 	form = FormTicket()
+# 	departments = Departments.objects.all()
+# 	employee = Employee.objects.all()
+# 	return render(request, 'ticket/ticket_form.html', {'form': form, 'employee': employee, 'departments': departments})
+
 def add_ticket_view(request):
-	form = FormTicket()
+	if request.method == 'POST':
+		form = FormTicket(request.POST)
+		if form.is_valid():
+			form_items = form.save(commit=False)
+			form_items.save()
+		return redirect('ticket:add_ticket')
+	else:
+		form = FormTicket()
 	return render(request, 'ticket/ticket_form.html', {'form': form})

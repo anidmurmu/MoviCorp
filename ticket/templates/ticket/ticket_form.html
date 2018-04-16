@@ -10,11 +10,11 @@
 </head>
 <body style="background-color:#00b359">
 	<div class="container">
-    <div class="center" style="display: flex; justify-content: center; align-items: center; width: 40%; height: 200px;">
+    <div class="center">
       <form method="post" action="{% url 'ticket:add_ticket' %}">
         {% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" value="Login">
+        <input class="btn btn-primary" type="submit" value="Submit">
       </form>
     </div>
 	</div>
