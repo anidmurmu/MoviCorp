@@ -46,6 +46,7 @@ def add_ticket_view(request):
 		form = FormTicket(request.POST)
 		if form.is_valid():
 			form_items = form.save(commit=False)
+			form_itmes.department_id = Departments.objects.all()
 			form_items.save()
 		return redirect('ticket:add_ticket')
 	else:
